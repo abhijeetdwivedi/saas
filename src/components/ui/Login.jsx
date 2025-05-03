@@ -1,3 +1,5 @@
+import { useState } from "react";
+import axios from "axios";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,10 +13,36 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom"
 
-export function Login({
+export default function Login({
     className,
     ...props
 }) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post("http://localhost:3000/api/v2/users/login", {
+                email,
+                password
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            console.log("Login successful:", res.data);
+        } catch (err) {
+            if (err.response) {
+                console.error("Login error:", err.response.data.message);
+            } else {
+                console.error("Network error:", err.message);
+            }
+        }
+    };
+
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card>
@@ -25,7 +53,7 @@ export function Login({
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email</Label>
@@ -34,6 +62,8 @@ export function Login({
                                     type="email"
                                     placeholder="m@example.com"
                                     required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="grid gap-2">
@@ -46,7 +76,13 @@ export function Login({
                                         Forgot your password?
                                     </Link>
                                 </div>
-                                <Input id="password" type="password" required />
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
                             </div>
                             <Button type="submit" className="w-full">
                                 Login

@@ -4,7 +4,7 @@ import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils";
 
 
-const Dashboard = () => {
+const Home = () => {
     const [date, setDate] = React.useState(new Date());
 
     return (
@@ -76,4 +76,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Home;

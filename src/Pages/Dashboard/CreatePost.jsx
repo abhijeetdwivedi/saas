@@ -1,30 +1,17 @@
+import CreatePostForm from "../../components/ui/CreatePostForm";
+import PostPreview from "../../components/ui/PostPreview";
 import React from 'react'
 
 function CreatePost() {
     return (
-        <section>
-            <div>
-                <h1>Create Post</h1>
+        <div className="ml-64 flex flex-col md:flex-row gap-6 p-6">
+            <div className="w-full md:w-1/2">
+                <CreatePostForm />
             </div>
-            <div>
-                <h2>Choose Platform</h2>
+            <div className="w-full md:w-1/2">
+                <PostPreview />
             </div>
-            <div>
-                <h2>Select Media</h2>
-            </div>
-            <div>
-                <h2>Description</h2>
-            </div>
-            <div>
-                <div><h2>Date</h2></div>
-                <div><h2>Time</h2></div>
-            </div>
-
-
-
-
-                <input className='bg-blue-600' type="file" id="filePicker" webkitdirectory directory multiple />
-        </section>
+        </div>
     )
 }
 
